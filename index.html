@@ -94,9 +94,17 @@
     <p></p>
     <form>
 
-
+      <div>
+        <label for="room">SheepChat room id</label><input type="text" placeholder="http...#undefined-??????" id="room">
+        <div>
+          <i>
+            <br>Last 8 symbols in link of sheepchat widget</i><br>
+        Example: http://127.0.0.1:49135/wg/c/?m=game&l=0&i=0&t=0&n=light&r=0&h=1&bg=0&co=%23FFFFFF#undefined-w6madxgx<br>
+        room id <b>w6madxgx</b></i></div>
+      </div>
     <div>
       <label for="delay">Msg delay sec</label><input type="range" min="0" max="60" value="5" step="5" id="delay">
+
       <div class="delay-value">5</div>
       <div class="clearfix"></div>
     </div>
@@ -230,7 +238,7 @@
         navigator.mediaDevices.getUserMedia({audio:true})
         // add our listeners
         .then(stream => detectSilence(stream, stopSpeech, startSpeech))
-        .catch(e => log(e.message));
+        .catch(e => console.log(e.message));
 
 
         function detectSilence(
@@ -275,6 +283,7 @@
         var synth = window.speechSynthesis;
         var first_click = true;
 
+        var room = document.querySelector('#room');
         var sub = document.querySelector('#sub');
         var play_pause = document.querySelector('#play_pause');
         var playButton = document.querySelector('#start');
@@ -404,7 +413,7 @@
           playButton.style.background = "orange";
           playButton.style.color = "white";
           playButton.innerHTML = "Starting";
-          socket = new WebSocket(`ws://127.0.0.1:49135/socket.io/?session_id=${Math.floor(1612270419506*Math.random())}&device_type=listener&os=Windows%2B10%2B64-bit&room=undefined-w6madxgx&pc_name=Widget%2Bon%2BChrome&EIO=3&transport=websocket`);
+          socket = new WebSocket(`ws://127.0.0.1:49135/socket.io/?session_id=${Math.floor(1612270419506*Math.random())}&device_type=listener&os=Windows%2B10%2B64-bit&room=undefined-${room.value}&pc_name=Widget%2Bon%2BChrome&EIO=3&transport=websocket`);
 
           socket.onerror = function(error) {
             playButton.style.background = "red";
